@@ -298,7 +298,7 @@ const ProductDetail: React.FC = () => {
                 {/* Related Products - Same Category */}
                 <div className="mb-4">
                     <h2 className="text-2xl font-bold text-gray-900 mb-6">Related Products</h2>
-                    <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-2">
+                    <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-4 gap-2">
                         {sections
                             .find(section => section.items.some(item => item.id === product.id))
                             ?.items.filter(item => item.id !== product.id)
@@ -313,7 +313,7 @@ const ProductDetail: React.FC = () => {
                 {/* Recommended Products - Random Selection */}
                 <div className="mb-4">
                     <h2 className="text-2xl font-bold text-gray-900 mb-6">You Might Also Like</h2>
-                    <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-2">
+                    <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-4 gap-2">
                         {sections
                             .flatMap(section => section.items)
                             .filter(item => item.id !== product.id)
