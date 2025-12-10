@@ -52,7 +52,7 @@ const Register: React.FC<RegisterProps> = ({ navigate }) => {
         );
 
         if (success) {
-            navigate('/'); // Redirect to home after successful registration
+            navigate('/orders'); // Redirect to orders after successful registration
         } else {
             setError('Email already registered. Please use a different email.');
         }

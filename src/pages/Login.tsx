@@ -22,7 +22,7 @@ const Login: React.FC<LoginProps> = ({ navigate }) => {
         const success = await login(email, password);
 
         if (success) {
-            navigate('/'); // Redirect to home after successful login
+            navigate('/orders'); // Redirect to orders after successful login
         } else {
             setError('Invalid email or password');
         }
