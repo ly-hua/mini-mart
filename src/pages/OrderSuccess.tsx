@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckCircle, Send, Package } from 'lucide-react';
+import { CheckCircle, Send, Package, ShoppingBag } from 'lucide-react';
 
 interface OrderSuccessProps {
     navigate: (path: string) => void;
@@ -40,19 +40,28 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({ navigate }) => {
                     href={telegramUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full bg-[#24A1DE] text-white font-bold py-4 rounded-xl hover:bg-[#208bbf] transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-100"
+                    className="w-full bg-[#24A1DE] text-white font-bold py-4 rounded-xl hover:bg-[#208bbf] transition-all flex items-center justify-center gap-2"
                 >
                     <Send size={18} />
                     Track Delivery on Telegram
                 </a>
             </div>
 
-            <button
-                onClick={() => navigate('/')}
-                className="text-emerald-600 font-bold hover:underline"
-            >
-                Continue Shopping
-            </button>
+            <div className="flex flex-col sm:flex-row gap-4 w-full">
+                <button
+                    onClick={() => navigate('/orders')}
+                    className="flex-1 bg-emerald-600 text-white font-bold py-3 px-6 rounded-xl hover:bg-emerald-700 transition-colors flex items-center justify-center gap-2"
+                >
+                    <ShoppingBag size={18} />
+                    View My Orders
+                </button>
+                <button
+                    onClick={() => navigate('/')}
+                    className="flex-1 bg-white border-2 border-gray-200 text-gray-700 font-bold py-3 px-6 rounded-xl hover:bg-gray-50 transition-colors"
+                >
+                    Continue Shopping
+                </button>
+            </div>
         </div>
     );
 };
