@@ -102,13 +102,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuToggle, onSearchOpen }) => {
         <div className="max-w-[1400px] mx-auto px-4 flex items-center justify-between gap-2 md:gap-8">
 
           {/* Mobile Menu Button (Left) */}
-          <button
-            aria-label="Menu"
-            className="lg:hidden text-gray-600 p-2 -ml-2"
-            onClick={onMenuToggle}
-          >
-            <Menu size={24} />
-          </button>
+          {/* Mobile Menu Button (Left) - Removed as menu is empty */}
 
           {/* Logo (Center on mobile, Left on desktop) */}
           <div className="flex-shrink-0 absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0 md:mr-auto">
