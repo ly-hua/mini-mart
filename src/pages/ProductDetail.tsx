@@ -296,15 +296,13 @@ const ProductDetail: React.FC = () => {
                 {/* Related Products - Same Category */}
                 <div className="mb-4">
                     <h2 className="text-2xl font-bold text-gray-900 mb-6">Related Products</h2>
-                    <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-0 border-t border-l border-gray-100">
+                    <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-2">
                         {sections
                             .find(section => section.items.some(item => item.id === product.id))
                             ?.items.filter(item => item.id !== product.id)
                             .slice(0, 6)
                             .map(relatedProduct => (
-                                <div key={relatedProduct.id} className="border-r border-b border-gray-100 group">
-                                    <ProductCard product={relatedProduct} />
-                                </div>
+                                <ProductCard key={relatedProduct.id} product={relatedProduct} />
                             )) || <div className="p-4 text-gray-500 col-span-full">No related products found.</div>
                         }
                     </div>
@@ -313,16 +311,14 @@ const ProductDetail: React.FC = () => {
                 {/* Recommended Products - Random Selection */}
                 <div className="mb-4">
                     <h2 className="text-2xl font-bold text-gray-900 mb-6">You Might Also Like</h2>
-                    <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-0 border-t border-l border-gray-100">
+                    <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-2">
                         {sections
                             .flatMap(section => section.items)
                             .filter(item => item.id !== product.id)
                             .sort(() => 0.5 - Math.random())
                             .slice(0, 6)
                             .map(recommendedProduct => (
-                                <div key={recommendedProduct.id} className="border-r border-b border-gray-100 group">
-                                    <ProductCard product={recommendedProduct} />
-                                </div>
+                                <ProductCard key={recommendedProduct.id} product={recommendedProduct} />
                             ))}
                     </div>
                 </div>
