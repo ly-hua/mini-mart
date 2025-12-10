@@ -8,7 +8,7 @@ import ProductCard from '../components/home/ProductCard';
 const ProductDetail: React.FC = () => {
     const { addToCart } = useCart();
     const { isFavorite, toggleFavorite } = useWishlist();
-    const { sections } = useProducts();
+    const { sections, loading } = useProducts();
 
     const [quantity, setQuantity] = React.useState(1);
     const [activeTab, setActiveTab] = React.useState('description');
@@ -37,6 +37,14 @@ const ProductDetail: React.FC = () => {
         }
         return null;
     }, [sections, productId]);
+
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center min-h-screen">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-emerald-600"></div>
+            </div>
+        );
+    }
 
     if (!product) {
         return (
