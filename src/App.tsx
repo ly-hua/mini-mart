@@ -148,22 +148,7 @@ const AppContent: React.FC = () => {
             <div className="flex-1 overflow-y-auto">
 
               {/* Account Actions */}
-              <div className="space-y-2 mb-6">
-                <a href="/login" className="flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-50 text-emerald-700 font-bold transition-colors">
-                  <span className="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span>
-                  Login / Register
-                </a>
-                <button
-                  onClick={() => {
-                    handleMenuToggle();
-                    openWishlistDrawer();
-                  }}
-                  className="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-pink-50 text-pink-700 font-bold transition-colors text-left"
-                >
-                  <span className="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></span>
-                  My Wishlist
-                </button>
-              </div>
+              {/* Account Actions - Removed as per request */}
 
               <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4 px-2">Shop by Category</h3>
               <ul className="space-y-1">
