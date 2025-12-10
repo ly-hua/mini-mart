@@ -15,6 +15,7 @@ import { useWishlist } from '../../context/WishlistContext';
 interface HeaderProps {
   onMenuToggle: () => void;
   cartItemCount?: number;
+  onSearchOpen?: () => void;
 }
 
 const CATEGORIES = [
@@ -73,8 +74,8 @@ const SEARCH_CATEGORIES = [
   'Baby products'
 ];
 
-const Header: React.FC<HeaderProps> = ({ onMenuToggle }) => {
-  const [isCategoryOpen, setIsCategoryOpen] = useState(true);
+const Header: React.FC<HeaderProps> = ({ onMenuToggle, onSearchOpen }) => {
+  const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const { openDrawer, cartCount, cartTotal } = useCart();
   const { openWishlistDrawer, wishlistCount } = useWishlist();
 
@@ -160,6 +161,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuToggle }) => {
             {/* Mobile Search Icon */}
             <button
               aria-label="Search"
+              onClick={() => onSearchOpen?.()}
               className="lg:hidden w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-600 hover:bg-[#00A651] hover:text-white transition-all"
             >
               <Search size={20} />
@@ -234,7 +236,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuToggle }) => {
                 <ul className="text-sm text-gray-600 font-medium">
                   {CATEGORIES.map((cat, index) => (
                     <li key={index} className="px-6 py-2.5 hover:bg-emerald-50 hover:text-[#008c44] cursor-pointer flex items-center justify-between group/item relative">
-                      <a href={`/category/${cat.name.toLowerCase().replace(/\s+/g, '-')}`} className="flex-1">
+                      <a href={`/shop?category=${cat.name.toLowerCase()}`} className="flex-1">
                         {cat.name}
                       </a>
                       {cat.sub && cat.sub.length > 0 && (
@@ -246,7 +248,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuToggle }) => {
                               {cat.sub.map((sub, subIndex) => (
                                 <li key={subIndex}>
                                   <a
-                                    href={`/category/${cat.name.toLowerCase().replace(/\s+/g, '-')}/${sub.toLowerCase().replace(/\s+/g, '-')}`}
+                                    href={`/shop?category=${sub.toLowerCase()}`}
                                     className="block px-5 py-2 hover:bg-emerald-50 hover:text-[#008c44]"
                                   >
                                     {sub}

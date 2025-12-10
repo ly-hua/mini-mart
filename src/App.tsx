@@ -3,9 +3,11 @@ import * as React from 'react';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import CartDrawer from './components/common/CartDrawer';
+import SearchDrawer from './components/common/SearchDrawer';
 import Home from './pages/Home';
 import ProductDetail from './pages/ProductDetail';
 import Category from './pages/Category';
+import Shop from './pages/Shop';
 import { CartProvider, useCart } from './context/CartContext';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
@@ -47,8 +49,13 @@ const useSimpleRouter = () => {
       return ProductDetail;
     }
 
+    // Check for shop route
+    if (currentPath === '/shop') {
+      return Shop;
+    }
+
     // Check for category route
-    if (currentPath.startsWith('/category/') || currentPath === '/collections' || currentPath === '/shop') {
+    if (currentPath.startsWith('/category/') || currentPath === '/collections') {
       return Category;
     }
 
@@ -103,6 +110,7 @@ const useSimpleRouter = () => {
 
 const AppContent: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const [isSearchOpen, setIsSearchOpen] = React.useState(false);
   const { navLinks } = useProducts();
   const { PageComponent, navigate, path } = useSimpleRouter(); // Destructure navigate and path here
   const { cartCount } = useCart();
@@ -115,7 +123,7 @@ const AppContent: React.FC = () => {
 
   return (
     <div className="font-sans min-h-screen bg-gray-50 flex flex-col pb-16 lg:pb-0">
-      <Header onMenuToggle={handleMenuToggle} cartItemCount={cartCount} />
+      <Header onMenuToggle={handleMenuToggle} cartItemCount={cartCount} onSearchOpen={() => setIsSearchOpen(true)} />
 
       {isMenuOpen && (
         <div
@@ -196,6 +204,7 @@ const AppContent: React.FC = () => {
       {/* Pass navigate to CartDrawer for internal routing */}
       <CartDrawer navigate={navigate} />
       <WishlistDrawer navigate={navigate} />
+      <SearchDrawer isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
     </div>
   );
 };
