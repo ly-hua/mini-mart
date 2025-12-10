@@ -15,7 +15,7 @@ import OrderSuccess from './pages/OrderSuccess';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Orders from './pages/Orders';
-import { useProducts } from './hooks/useProducts';
+
 import { WishlistProvider } from './context/WishlistContext';
 import { AuthProvider } from './context/AuthContext';
 import WishlistDrawer from './components/common/WishlistDrawer';
@@ -111,7 +111,7 @@ const useSimpleRouter = () => {
 const AppContent: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isSearchOpen, setIsSearchOpen] = React.useState(false);
-  const { navLinks } = useProducts();
+
   const { PageComponent, navigate, path } = useSimpleRouter(); // Destructure navigate and path here
   const { cartCount } = useCart();
 
@@ -150,21 +150,7 @@ const AppContent: React.FC = () => {
               {/* Account Actions */}
               {/* Account Actions - Removed as per request */}
 
-              <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4 px-2">Shop by Category</h3>
-              <ul className="space-y-1">
-                {navLinks.map((link: string) => (
-                  <li key={link}>
-                    <a
-                      href={`/category/${link.toLowerCase().replace(/\s+/g, '-')}`}
-                      className="block py-3 px-4 rounded-lg text-gray-700 font-medium hover:bg-gray-50 hover:text-emerald-700 transition-all flex items-center justify-between group"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      {link}
-                      <span className="text-gray-300 group-hover:text-emerald-500 transition-colors">→</span>
-                    </a>
-                  </li>
-                ))}
-              </ul>
+              {/* Shop by Category - Removed as per request */}
             </div>
 
             <div className="mt-auto pt-6 border-t border-gray-100 flex items-center justify-between text-xs text-gray-400">
