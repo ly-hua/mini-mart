@@ -12,8 +12,14 @@ const SearchDrawer: React.FC<SearchDrawerProps> = ({ isOpen, onClose }) => {
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
         if (searchQuery.trim()) {
+            // Use client-side navigation
+            onClose();
             window.location.href = `/shop?q=${encodeURIComponent(searchQuery)}`;
         }
+    };
+
+    const handleCategoryClick = () => {
+        onClose();
     };
 
     return (
@@ -71,6 +77,7 @@ const SearchDrawer: React.FC<SearchDrawerProps> = ({ isOpen, onClose }) => {
                                     <a
                                         key={category}
                                         href={`/shop?category=${category.toLowerCase()}`}
+                                        onClick={handleCategoryClick}
                                         className="px-3 py-1.5 bg-gray-100 hover:bg-[#00A651] hover:text-white rounded-full text-sm transition-colors"
                                     >
                                         {category}

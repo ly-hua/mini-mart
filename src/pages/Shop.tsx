@@ -7,14 +7,19 @@ const Shop: React.FC = () => {
     const { sections, loading } = useProducts();
     const [selectedCategory, setSelectedCategory] = useState<string>('');
     const [priceRange, setPriceRange] = useState<string>('');
+    const [searchQuery, setSearchQuery] = useState<string>('');
     const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
 
     // Get URL parameters
     React.useEffect(() => {
         const params = new URLSearchParams(window.location.search);
         const category = params.get('category');
+        const query = params.get('q');
         if (category) {
             setSelectedCategory(category.toLowerCase());
+        }
+        if (query) {
+            setSearchQuery(query.toLowerCase());
         }
     }, []);
 
@@ -36,6 +41,13 @@ const Shop: React.FC = () => {
     const filteredProducts = useMemo(() => {
         let filtered = [...allProducts];
 
+        // Filter by search query
+        if (searchQuery) {
+            filtered = filtered.filter(p =>
+                p.name.toLowerCase().includes(searchQuery)
+            );
+        }
+
         // Filter by category
         if (selectedCategory) {
             const section = sections.find(s =>
@@ -43,7 +55,9 @@ const Shop: React.FC = () => {
                 selectedCategory.includes(s.title.toLowerCase())
             );
             if (section) {
-                filtered = section.items;
+                filtered = section.items.filter(item =>
+                    !searchQuery || item.name.toLowerCase().includes(searchQuery)
+                );
             }
         }
 
@@ -59,7 +73,7 @@ const Shop: React.FC = () => {
         }
 
         return filtered;
-    }, [allProducts, sections, selectedCategory, priceRange]);
+    }, [allProducts, sections, selectedCategory, priceRange, searchQuery]);
 
     const FilterSection = () => (
         <div className="space-y-6">
