@@ -23,8 +23,8 @@ const DealSection: React.FC<DealSectionProps> = ({ data }) => {
         </div>
       </div>
 
-      {/* Product Grid - Responsive Columns: 2 (mobile) -> 4 (md) -> 4 (xl) */}
-      <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-4 gap-2">
+      {/* Product Grid - Responsive Columns: 2 (mobile) -> 4 (md) -> 6 (xl) */}
+      <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-2">
         {data.items.slice(0, 6).map((item: Product) => (
           <ProductCard key={item.id} product={item} />
         ))}

@@ -78,7 +78,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             )}
           </div>
 
-          {/* Icon-only button on mobile, full button on desktop */}
+          {/* Icon-only button on mobile only */}
           <button
             onClick={handleAddToCart}
             className="md:hidden bg-[#00A651] text-white p-2 rounded-lg hover:bg-[#008c44] transition-colors flex items-center justify-center"
@@ -88,8 +88,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </div>
       </div>
 
-      {/* Add to Cart Button (Desktop - Slides up on hover) */}
-      <div className="hidden md:block absolute bottom-3 left-3 right-3 translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+      {/* Add to Cart Button (Desktop only - Slides up on hover, hidden on tablet) */}
+      <div className="hidden xl:block absolute bottom-3 left-3 right-3 translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
         <button
           onClick={handleAddToCart}
           className="w-full bg-[#00A651] text-white py-2.5 rounded-lg font-medium hover:bg-[#008c44] transition-colors flex items-center justify-center gap-2 text-base"

@@ -95,7 +95,7 @@ const Collections: React.FC = () => {
             </div>
 
             {/* Collections Grid - Responsive Columns: 2 (mobile) -> 4 (md) -> 6 (xl) */}
-            <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-4 gap-0 border-t border-l border-gray-100">
+            <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-0 border-t border-l border-gray-100">
                 {COLLECTIONS.map((collection) => (
                     <a
                         key={collection.id}
