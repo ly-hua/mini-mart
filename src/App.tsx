@@ -16,7 +16,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Orders from './pages/Orders';
 import { useProducts } from './hooks/useProducts';
-import { WishlistProvider, useWishlist } from './context/WishlistContext';
+import { WishlistProvider } from './context/WishlistContext';
 import { AuthProvider } from './context/AuthContext';
 import WishlistDrawer from './components/common/WishlistDrawer';
 import MobileBottomNav from './components/layout/MobileBottomNav';
@@ -114,7 +114,7 @@ const AppContent: React.FC = () => {
   const { navLinks } = useProducts();
   const { PageComponent, navigate, path } = useSimpleRouter(); // Destructure navigate and path here
   const { cartCount } = useCart();
-  const { openWishlistDrawer } = useWishlist();
+
 
   // Update handleMenuToggle
   const handleMenuToggle = React.useCallback(() => {

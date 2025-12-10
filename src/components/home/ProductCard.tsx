@@ -78,17 +78,17 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             )}
           </div>
 
-          {/* Icon-only button on mobile only */}
+          {/* Icon-only button on mobile and tablet (touch devices) */}
           <button
             onClick={handleAddToCart}
-            className="md:hidden bg-[#00A651] text-white p-2 rounded-lg hover:bg-[#008c44] transition-colors flex items-center justify-center"
+            className="xl:hidden bg-[#00A651] text-white p-2 rounded-lg hover:bg-[#008c44] transition-colors flex items-center justify-center"
           >
             <Plus size={16} />
           </button>
         </div>
       </div>
 
-      {/* Add to Cart Button (Desktop only - Slides up on hover, hidden on tablet) */}
+      {/* Add to Cart Button (Desktop only - Slides up on hover) */}
       <div className="hidden xl:block absolute bottom-3 left-3 right-3 translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
         <button
           onClick={handleAddToCart}
