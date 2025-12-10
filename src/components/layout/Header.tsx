@@ -13,7 +13,7 @@ import { useCart } from '../../context/CartContext';
 import { useWishlist } from '../../context/WishlistContext';
 
 interface HeaderProps {
-  onMenuToggle: () => void;
+  // onMenuToggle: () => void; // Removed
   cartItemCount?: number;
   onSearchOpen?: () => void;
 }
@@ -74,7 +74,7 @@ const SEARCH_CATEGORIES = [
   'Baby products'
 ];
 
-const Header: React.FC<HeaderProps> = ({ onMenuToggle, onSearchOpen }) => {
+const Header: React.FC<HeaderProps> = ({ onSearchOpen }) => {
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const { openDrawer, cartCount, cartTotal } = useCart();
   const { openWishlistDrawer, wishlistCount } = useWishlist();

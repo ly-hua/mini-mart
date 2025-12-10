@@ -151,10 +151,10 @@ const Shop: React.FC = () => {
                         </div>
                     </aside>
 
-                    {/* Mobile Filter Button */}
+                    {/* Mobile Filter Button - Visible only on mobile (< md), hidden on tablet and desktop */}
                     <button
                         onClick={() => setIsMobileFilterOpen(true)}
-                        className="lg:hidden fixed bottom-6 right-6 bg-[#00A651] text-white p-4 rounded-full z-30 flex items-center gap-2"
+                        className="md:hidden fixed bottom-6 right-6 bg-[#00A651] text-white p-4 rounded-full z-30 flex items-center gap-2"
                     >
                         <Filter size={20} />
                         <span className="font-medium">Filters</span>
