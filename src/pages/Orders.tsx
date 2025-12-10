@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Package, ChevronRight, Clock, Search } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 
 export interface Order {
     id: string;
@@ -7,49 +8,43 @@ export interface Order {
     total: number;
     status: 'Processing' | 'Shipped' | 'Delivered' | 'Cancelled';
     items: string[];
+    userEmail?: string;
+    userName?: string;
+    userPhone?: string;
 }
 
-const MOCK_ORDERS: Order[] = [
-    {
-        id: 'MART-892312',
-        date: 'Dec 9, 2025',
-        total: 24.50,
-        status: 'Processing',
-        items: ['Cadbury Dairy Milk', 'Coca-Cola Can (x3)', 'Lays Classic']
-    },
-    {
-        id: 'MART-773412',
-        date: 'Dec 1, 2025',
-        total: 12.00,
-        status: 'Delivered',
-        items: ['Nissin Cup Noodle (x2)', 'Evian Water']
-    },
-    {
-        id: 'MART-551293',
-        date: 'Nov 24, 2025',
-        total: 45.99,
-        status: 'Delivered',
-        items: ['Huggies Dry Pants', 'Johnson Baby Oil', 'Fresh Milk 1L']
-    }
-];
-
 const Orders: React.FC = () => {
+    const { user } = useAuth();
     const [orders, setOrders] = useState<Order[]>([]);
+
+    // Redirect to login if not authenticated
+    useEffect(() => {
+        if (!user) {
+            window.location.href = '/login';
+        }
+    }, [user]);
 
     // Load orders from localStorage
     const loadOrders = () => {
+        if (!user) return;
+
         try {
             const savedOrders = localStorage.getItem('orders');
-            const localOrders = savedOrders ? JSON.parse(savedOrders) : [];
-            // Show real orders first, then mock orders
-            setOrders([...localOrders, ...MOCK_ORDERS]);
+            const allOrders: Order[] = savedOrders ? JSON.parse(savedOrders) : [];
+
+            // Filter orders to show only current user's orders
+            const userOrders = allOrders.filter(order =>
+                order.userEmail === user.email
+            );
+
+            setOrders(userOrders);
         } catch (e) {
             console.error("Failed to parse orders", e);
-            setOrders(MOCK_ORDERS);
+            setOrders([]);
         }
     };
 
-    // Load orders on mount
+    // Load orders on mount and when user changes
     useEffect(() => {
         loadOrders();
 
@@ -73,7 +68,7 @@ const Orders: React.FC = () => {
             window.removeEventListener('storage', handleStorageChange);
             window.removeEventListener('orderPlaced', handleOrderPlaced);
         };
-    }, []);
+    }, [user]);
 
     const getStatusColor = (status: string) => {
         switch (status) {
@@ -85,12 +80,23 @@ const Orders: React.FC = () => {
         }
     };
 
+    // Don't render anything if not logged in (will redirect)
+    if (!user) {
+        return (
+            <div className="flex items-center justify-center min-h-screen">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-emerald-600"></div>
+            </div>
+        );
+    }
+
     return (
         <div className="min-h-screen bg-gray-50 pb-20 pt-4 lg:pt-8">
             <div className="max-w-3xl mx-auto px-4">
                 <header className="mb-6">
                     <h1 className="text-2xl font-bold text-gray-900">My Orders</h1>
-                    <p className="text-sm text-gray-500 mt-1">Track and view your order history</p>
+                    <p className="text-sm text-gray-500 mt-1">
+                        Welcome back, <span className="font-semibold text-gray-700">{user.name}</span>! Track and view your order history
+                    </p>
                 </header>
 
                 {/* Search / Filter (Visual only for now) */}
