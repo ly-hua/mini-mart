@@ -1,9 +1,10 @@
 import * as React from 'react';
-import { Star, ShoppingCart, Heart, Share2, Minus, Plus, Check, Shield, Truck, RefreshCw } from 'lucide-react';
+import { Star, ShoppingCart, Heart, Minus, Plus, Check, Shield, Truck, RefreshCw } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
 import { useProducts } from '../hooks/useProducts';
 import ProductCard from '../components/home/ProductCard';
+import ShareMenu from '../components/common/ShareMenu';
 
 const ProductDetail: React.FC = () => {
     const { addToCart } = useCart();
@@ -207,9 +208,11 @@ const ProductDetail: React.FC = () => {
                                 <Heart size={20} className={isFav ? 'fill-current' : ''} />
                             </button>
 
-                            <button className="h-12 w-12 md:h-14 md:w-14 bg-gray-100 text-gray-600 rounded-lg flex items-center justify-center hover:bg-gray-200 transition-colors">
-                                <Share2 size={20} />
-                            </button>
+                            <ShareMenu
+                                productName={product.name}
+                                productImage={product.image}
+                                productPrice={product.price}
+                            />
                         </div>
 
                         {/* Product Features */}
