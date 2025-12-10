@@ -210,7 +210,6 @@ const ProductDetail: React.FC = () => {
 
                             <ShareMenu
                                 productName={product.name}
-                                productImage={product.image}
                                 productPrice={product.price}
                             />
                         </div>

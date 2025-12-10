@@ -3,11 +3,10 @@ import { Share2, X } from 'lucide-react';
 
 interface ShareMenuProps {
     productName: string;
-    productImage: string;
     productPrice: number;
 }
 
-const ShareMenu: React.FC<ShareMenuProps> = ({ productName, productImage, productPrice }) => {
+const ShareMenu: React.FC<ShareMenuProps> = ({ productName, productPrice }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const shareUrl = window.location.href;
@@ -16,15 +15,12 @@ const ShareMenu: React.FC<ShareMenuProps> = ({ productName, productImage, produc
     const shareLinks = {
         facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`,
         telegram: `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`,
-        // Instagram doesn't support direct sharing via URL, so we'll copy link
         instagram: shareUrl,
-        // TikTok doesn't support direct sharing via URL, so we'll copy link
         tiktok: shareUrl,
     };
 
     const handleShare = (platform: string) => {
         if (platform === 'instagram' || platform === 'tiktok') {
-            // Copy to clipboard
             navigator.clipboard.writeText(shareUrl);
             alert(`Link copied! You can now paste it in ${platform === 'instagram' ? 'Instagram' : 'TikTok'}`);
         } else {
@@ -45,13 +41,11 @@ const ShareMenu: React.FC<ShareMenuProps> = ({ productName, productImage, produc
 
             {isOpen && (
                 <>
-                    {/* Overlay */}
                     <div
                         className="fixed inset-0 z-40"
                         onClick={() => setIsOpen(false)}
                     />
 
-                    {/* Share Menu */}
                     <div className="absolute bottom-full right-0 mb-2 bg-white rounded-xl border border-gray-200 p-4 z-50 min-w-[200px]">
                         <div className="flex items-center justify-between mb-3">
                             <h3 className="font-bold text-sm text-gray-900">Share</h3>
@@ -64,7 +58,6 @@ const ShareMenu: React.FC<ShareMenuProps> = ({ productName, productImage, produc
                         </div>
 
                         <div className="space-y-2">
-                            {/* Facebook */}
                             <button
                                 onClick={() => handleShare('facebook')}
                                 className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-blue-50 transition-colors text-left"
@@ -77,7 +70,6 @@ const ShareMenu: React.FC<ShareMenuProps> = ({ productName, productImage, produc
                                 <span className="text-sm font-medium text-gray-700">Facebook</span>
                             </button>
 
-                            {/* Telegram */}
                             <button
                                 onClick={() => handleShare('telegram')}
                                 className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-blue-50 transition-colors text-left"
@@ -90,7 +82,6 @@ const ShareMenu: React.FC<ShareMenuProps> = ({ productName, productImage, produc
                                 <span className="text-sm font-medium text-gray-700">Telegram</span>
                             </button>
 
-                            {/* Instagram */}
                             <button
                                 onClick={() => handleShare('instagram')}
                                 className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-pink-50 transition-colors text-left"
@@ -103,7 +94,6 @@ const ShareMenu: React.FC<ShareMenuProps> = ({ productName, productImage, produc
                                 <span className="text-sm font-medium text-gray-700">Instagram</span>
                             </button>
 
-                            {/* TikTok */}
                             <button
                                 onClick={() => handleShare('tiktok')}
                                 className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-50 transition-colors text-left"
