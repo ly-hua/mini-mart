@@ -33,30 +33,31 @@ const Checkout: React.FC<CheckoutPageProps> = ({ navigate }) => {
         setTimeout(() => {
             const newOrderId = "MART-" + Math.floor(100000 + Math.random() * 900000);
 
-            // Create New Order Object
+            // Create New Order Object with user information
             const newOrder = {
                 id: newOrderId,
                 date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
                 total: finalTotal,
                 status: 'Processing',
-                items: items.map(item => `${item.name}${item.quantity > 1 ? ` (x${item.quantity})` : ''}`)
+                items: items.map(item => `${item.name}${item.quantity > 1 ? ` (x${item.quantity})` : ''}`),
+                userEmail: user?.email || 'guest', // Track which user placed the order
+                userName: formData.fullName,
+                userPhone: formData.phone
             };
 
             // Save to LocalStorage
             try {
                 const existingOrders = JSON.parse(localStorage.getItem('orders') || '[]');
                 localStorage.setItem('orders', JSON.stringify([newOrder, ...existingOrders]));
+
+                // Dispatch custom event to notify Orders page
+                window.dispatchEvent(new Event('orderPlaced'));
             } catch (error) {
                 console.error("Failed to save order", error);
             }
 
             setLoading(false);
             clearCart();
-            // navigate(`/order-success?id=${newOrderId}`); 
-            // Only navigating to order success is usually better for UX, then they can go to orders. 
-            // But user asked "my history order when after check out".
-            // Generally "Order Success" page shows the details and has a "View My Orders" button.
-            // I'll stick to navigating to order-success but now the data is saved, so when they go to Orders it will be there.
             navigate(`/order-success?id=${newOrderId}`);
         }, 1500);
     };

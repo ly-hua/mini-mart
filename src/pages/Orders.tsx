@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Package, ChevronRight, Clock, Search } from 'lucide-react';
 
 export interface Order {
@@ -34,17 +34,46 @@ const MOCK_ORDERS: Order[] = [
 ];
 
 const Orders: React.FC = () => {
-    // Initialize orders with localStorage data + MOCK_ORDERS
-    const [orders] = React.useState<Order[]>(() => {
+    const [orders, setOrders] = useState<Order[]>([]);
+
+    // Load orders from localStorage
+    const loadOrders = () => {
         try {
             const savedOrders = localStorage.getItem('orders');
             const localOrders = savedOrders ? JSON.parse(savedOrders) : [];
-            return [...localOrders, ...MOCK_ORDERS];
+            // Show real orders first, then mock orders
+            setOrders([...localOrders, ...MOCK_ORDERS]);
         } catch (e) {
             console.error("Failed to parse orders", e);
-            return MOCK_ORDERS;
+            setOrders(MOCK_ORDERS);
         }
-    });
+    };
+
+    // Load orders on mount
+    useEffect(() => {
+        loadOrders();
+
+        // Listen for storage changes (when orders are added in checkout)
+        const handleStorageChange = (e: StorageEvent) => {
+            if (e.key === 'orders') {
+                loadOrders();
+            }
+        };
+
+        window.addEventListener('storage', handleStorageChange);
+
+        // Also listen for custom event when order is placed in same tab
+        const handleOrderPlaced = () => {
+            loadOrders();
+        };
+
+        window.addEventListener('orderPlaced', handleOrderPlaced);
+
+        return () => {
+            window.removeEventListener('storage', handleStorageChange);
+            window.removeEventListener('orderPlaced', handleOrderPlaced);
+        };
+    }, []);
 
     const getStatusColor = (status: string) => {
         switch (status) {
@@ -121,7 +150,7 @@ const Orders: React.FC = () => {
                         </div>
                         <h3 className="text-lg font-bold text-gray-900">No orders yet</h3>
                         <p className="text-gray-500 text-sm mt-2 max-w-xs mx-auto">Start shopping to see your order history here.</p>
-                        <a href="/" className="mt-6 px-6 py-2 bg-[#00A651] text-white rounded-full font-bold text-sm shadow-sm hover:bg-[#008c44] transition-colors">
+                        <a href="/" className="mt-6 px-6 py-2 bg-[#00A651] text-white rounded-full font-bold text-sm hover:bg-[#008c44] transition-colors">
                             Start Shopping
                         </a>
                     </div>

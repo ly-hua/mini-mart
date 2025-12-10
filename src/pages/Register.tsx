@@ -52,7 +52,14 @@ const Register: React.FC<RegisterProps> = ({ navigate }) => {
         );
 
         if (success) {
-            navigate('/orders'); // Redirect to orders after successful registration
+            // Check if there's a redirect destination
+            const redirectTo = sessionStorage.getItem('redirectAfterLogin');
+            if (redirectTo) {
+                sessionStorage.removeItem('redirectAfterLogin');
+                navigate(redirectTo);
+            } else {
+                navigate('/orders'); // Default to orders page
+            }
         } else {
             setError('Email already registered. Please use a different email.');
         }

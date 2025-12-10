@@ -1,5 +1,6 @@
 import React from 'react';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
 import { Trash2, Plus, Minus, ArrowRight } from 'lucide-react';
 
 interface CartPageProps {
@@ -8,6 +9,17 @@ interface CartPageProps {
 
 const Cart: React.FC<CartPageProps> = ({ navigate }) => {
     const { items, removeFromCart, updateQuantity, cartTotal } = useCart();
+    const { user } = useAuth();
+
+    const handleCheckout = () => {
+        if (!user) {
+            // Save intended destination
+            sessionStorage.setItem('redirectAfterLogin', '/checkout');
+            navigate('/login');
+        } else {
+            navigate('/checkout');
+        }
+    };
 
     if (items.length === 0) {
         return (
@@ -91,11 +103,20 @@ const Cart: React.FC<CartPageProps> = ({ navigate }) => {
                                 <span>${cartTotal.toFixed(2)}</span>
                             </div>
                         </div>
+
+                        {!user && (
+                            <div className="mb-4 p-3 bg-blue-50 border border-blue-100 rounded-lg">
+                                <p className="text-xs text-blue-800 text-center">
+                                    Please login to continue with checkout
+                                </p>
+                            </div>
+                        )}
+
                         <button
-                            onClick={() => navigate('/checkout')}
-                            className="w-full bg-emerald-600 text-white font-bold py-4 rounded-xl hover:bg-emerald-700 transition-all flex items-center justify-center gap-2 shadow-lg shadow-emerald-200"
+                            onClick={handleCheckout}
+                            className="w-full bg-emerald-600 text-white font-bold py-4 rounded-xl hover:bg-emerald-700 transition-all flex items-center justify-center gap-2"
                         >
-                            Proceed to Checkout <ArrowRight size={18} />
+                            {user ? 'Proceed to Checkout' : 'Login to Checkout'} <ArrowRight size={18} />
                         </button>
                     </div>
                 </div>
