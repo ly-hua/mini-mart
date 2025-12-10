@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 
 // Banner Images
 import banner1 from '../../assets/image/banner/image.png';
@@ -52,6 +52,10 @@ const HeroBanner: React.FC = () => {
     setCurrentSlide((prev) => (prev + 1) % slides.length);
   }, [slides.length]);
 
+  const prevSlide = React.useCallback(() => {
+    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+  }, [slides.length]);
+
   React.useEffect(() => {
     const timer = setInterval(nextSlide, 5000);
     return () => clearInterval(timer);
@@ -84,7 +88,7 @@ const HeroBanner: React.FC = () => {
             </h1>
           </div>
 
-          <button className="group mt-4 md:mt-8 bg-emerald-600 text-white px-5 py-2.5 md:px-8 md:py-4 rounded-full font-bold text-sm md:text-lg shadow-lg hover:bg-emerald-700 hover:shadow-xl transition-all flex items-center gap-2 animate-in zoom-in fade-in duration-500 delay-300">
+          <button className="group mt-4 md:mt-8 bg-emerald-600 text-white px-5 py-2.5 md:px-8 md:py-4 rounded-full font-bold text-sm md:text-lg hover:bg-emerald-700 transition-all flex items-center gap-2 animate-in zoom-in fade-in duration-500 delay-300">
             {current.buttonText}
             <ArrowRight size={16} className="md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
           </button>
@@ -102,7 +106,25 @@ const HeroBanner: React.FC = () => {
 
       </div>
 
-      {/* Controls */}
+      {/* Left Arrow */}
+      <button
+        onClick={prevSlide}
+        className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-20 bg-white/80 hover:bg-white text-gray-800 p-2 md:p-3 rounded-full transition-all hover:scale-110"
+        aria-label="Previous slide"
+      >
+        <ChevronLeft size={20} className="md:w-6 md:h-6" />
+      </button>
+
+      {/* Right Arrow */}
+      <button
+        onClick={nextSlide}
+        className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-20 bg-white/80 hover:bg-white text-gray-800 p-2 md:p-3 rounded-full transition-all hover:scale-110"
+        aria-label="Next slide"
+      >
+        <ChevronRight size={20} className="md:w-6 md:h-6" />
+      </button>
+
+      {/* Dots Controls */}
       <div className="absolute bottom-4 md:bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 md:gap-3 z-20">
         {slides.map((_, idx) => (
           <button
